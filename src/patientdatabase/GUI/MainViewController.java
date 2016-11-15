@@ -3,8 +3,9 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package patientdatabase;
+package patientdatabase.GUI;
 
+import patientdatabase.BE.Patient;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
@@ -46,7 +47,6 @@ public class MainViewController implements Initializable
                     new Patient(0, "Jeppe", "jle@easv.dk", "Full retardo"),
                     new Patient(1, "Lucas", "luc2517@easv365.dk", "Swaztica Afficianato")
                 );
-        
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tablePatients.setItems(patientList);
