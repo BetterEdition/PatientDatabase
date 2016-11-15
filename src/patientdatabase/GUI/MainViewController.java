@@ -10,13 +10,13 @@ import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import patientdatabase.BLL.BLLManager;
 
 /**
  *
@@ -43,10 +43,11 @@ public class MainViewController implements Initializable
     private void readDataIntoList()
     {
         ObservableList<Patient> patientList = 
-                FXCollections.observableArrayList(
-                    new Patient(0, "Jeppe", "jle@easv.dk", "Full retardo"),
-                    new Patient(1, "Lucas", "luc2517@easv365.dk", "Swaztica Afficianato")
-                );
+                FXCollections.observableArrayList();
+        
+        BLLManager bllManager = BLLManager.getInstance();
+        patientList.addAll(bllManager.getAllPatients());
+        
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tablePatients.setItems(patientList);
