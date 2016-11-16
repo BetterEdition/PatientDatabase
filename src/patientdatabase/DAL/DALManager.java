@@ -16,51 +16,43 @@ import patientdatabase.BE.Patient;
  *
  * @author jeppjleemoritzled
  */
-public class DALManager
-{
+public class DALManager {
+
     private static DALManager instance = null;
-    
-    public static DALManager getInstance()
-    {
-        if(instance == null)
-        {
+
+    public static DALManager getInstance() {
+        if (instance == null) {
             instance = new DALManager();
         }
-        
+
         return instance;
     }
-    
-    private DALManager()
-    {
+
+    private DALManager() {
     }
-    
-    public List<Patient> getAllPatients()
-    {
+
+    public List<Patient> getAllPatients() {
         List<Patient> returnList = new ArrayList<>();
-        
-        try(BufferedReader CSVFile = new BufferedReader(
-            new FileReader("patients.csv")))
-        {
+
+        try (BufferedReader CSVFile = new BufferedReader(
+                new FileReader("patients.csv"))) {
             CSVFile.readLine(); // SKIP FIRST LINE HEADER
             String line = CSVFile.readLine();
-            while(line!=null)
-            {
-                String[] dataArray = line.split(",");
+            while (line != null) {
+                String[] dataArray = line.split(",(?=([^\"]*\"[^\"]*\")*[^\"]*$)", -1);
                 returnList.add(new Patient(
-                                Integer.parseInt(dataArray[0]), 
-                                dataArray[1], 
-                                dataArray[2], 
-                                dataArray[3]));
-                
+                        Integer.parseInt(dataArray[0]),
+                        dataArray[1],
+                        dataArray[2],
+                        dataArray[3]));
+
                 line = CSVFile.readLine(); // Read next line
             }
-        }
-        catch(IOException ioe)
-        {
+        } catch (IOException ioe) {
             System.out.println(ioe);
             return null;
         }
         return returnList;
-        
+
     }
 }
