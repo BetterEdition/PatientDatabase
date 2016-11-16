@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import patientdatabase.BE.Patient;
 
 /**
  * FXML Controller class
@@ -28,6 +29,7 @@ public class PatientViewController implements Initializable
     @FXML
     private Label lblDiagnosis;
 
+    private Patient currentPatient;
     /**
      * Initializes the controller class.
      */
@@ -36,5 +38,19 @@ public class PatientViewController implements Initializable
     {
         // TODO
     }    
+    
+    public void setPatient(Patient patient)
+    {
+        currentPatient = patient;
+        fillLabels();
+    }
+    
+    private void fillLabels()
+    {
+        lblId.setText(currentPatient.getId()+"");
+        lblName.setText(currentPatient.getName());
+        lblEmail.setText(currentPatient.getEmail());
+        lblDiagnosis.setText(currentPatient.getDiagnosis());
+    }
     
 }

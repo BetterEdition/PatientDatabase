@@ -64,11 +64,19 @@ public class MainViewController implements Initializable
 
     private void loadPatientDataView(Patient patient) throws IOException
     {
+        // Fetches primary stage and gets loader and loads FXML file to Parent
         Stage primStage = (Stage)tablePatients.getScene().getWindow();
         FXMLLoader loader = new FXMLLoader(
                 getClass().getResource("PatientView.fxml"));
         Parent root = loader.load();
         
+        // Fetches controller from patient view
+        PatientViewController patientViewController =
+                loader.getController();
+        
+        patientViewController.setPatient(patient);
+        
+        // Sets new stage as modal window
         Stage stagePatientView = new Stage();
         stagePatientView.setScene(new Scene(root));
         
@@ -84,7 +92,9 @@ public class MainViewController implements Initializable
         // Check double-click left mouse button
         if(event.isPrimaryButtonDown() && event.getClickCount()==2)
         {
-            loadPatientDataView(null);
+            Patient selectedPatient = tablePatients.getSelectionModel(
+                            ).getSelectedItem();
+            loadPatientDataView(selectedPatient);
         }
     }
     
