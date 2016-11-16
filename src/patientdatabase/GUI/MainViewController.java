@@ -5,17 +5,26 @@
  */
 package patientdatabase.GUI;
 
+import java.io.IOException;
 import patientdatabase.BE.Patient;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseEvent;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import patientdatabase.BLL.BLLManager;
 
 /**
@@ -51,6 +60,32 @@ public class MainViewController implements Initializable
         columnName.setCellValueFactory(new PropertyValueFactory<>("name"));
         columnEmail.setCellValueFactory(new PropertyValueFactory<>("email"));
         tablePatients.setItems(patientList);
+    }
+
+    private void loadPatientDataView(Patient patient) throws IOException
+    {
+        Stage primStage = (Stage)tablePatients.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(
+                getClass().getResource("PatientView.fxml"));
+        Parent root = loader.load();
+        
+        Stage stagePatientView = new Stage();
+        stagePatientView.setScene(new Scene(root));
+        
+        stagePatientView.initModality(Modality.WINDOW_MODAL);
+        stagePatientView.initOwner(primStage);
+        
+        stagePatientView.show();
+    }
+
+    @FXML
+    private void mousePressedOnTableView(MouseEvent event) throws IOException
+    {
+        // Check double-click left mouse button
+        if(event.isPrimaryButtonDown() && event.getClickCount()==2)
+        {
+            loadPatientDataView(null);
+        }
     }
     
 }
